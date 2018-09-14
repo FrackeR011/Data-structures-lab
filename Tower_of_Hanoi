@@ -1,0 +1,121 @@
+#include <iostream>
+#include <string>
+#define MAX 100 
+using namespace std ;
+
+class stack
+{
+    int a[MAX] ;
+    int top = -1 ;
+    string name ;
+    public :
+    
+    stack( int n , string named )
+    {
+        name = named ;
+        while( n > 0 )
+        {
+            //top++ ;
+            //a[ top] = n-- ; }
+            this->push( n-- ) ;
+        }
+    
+    }
+    void push( int d )
+    {
+        //cout<<"blah";
+        top++ ;
+        a[ top ] = d ;
+    }
+    
+    int pop( )
+    {
+        if( top < 0 )
+            return -1 ;
+            
+        int temp = a[ top ] ;
+        top-- ;
+        return temp ;
+    }
+    
+    int get_top( )
+    {
+        return top + 1 ;
+    }
+    
+    void show_stack( )
+    {
+        cout<<"\n\n" ;
+        int i , j ;
+        if( top == -1 )
+            cout<<"STACK EMPTY!" ;
+        for( i =  top  ; i >= 0 ; i-- )
+        {    
+            for( j = 0 ;j < a[i] ; j++ )
+                cout<<"*" ;
+            cout<<"\n" ;
+        }
+        cout<<"\n" ;    
+    }
+
+
+    string get_name()
+    {
+        return name ;
+    }
+    
+} ;
+
+
+
+void moveDisk( stack &source , stack &dest )
+{
+    static int count = 1 ;
+    int temp = source.pop() ;
+    cout<<"Move "<<count<<"\n" ;
+    cout<<"Moving "<<temp<<" from "<<source.get_name()<<" to "<<dest.get_name()<<"\n" ;
+    
+    dest.push( temp  ) ;
+    cout<<source.get_name()<<"\n" ;
+    source.show_stack( ) ;
+    cout<<dest.get_name()<<"\n" ;
+    dest.show_stack( ) ;
+    count++ ;
+    
+}
+
+void moveTower( stack &source , stack &spare , stack &dest , int n )
+{
+
+    if( n==1 ) 
+       moveDisk( source , dest ) ;
+    
+    else if( n > 1 )
+    {
+            
+        moveTower( source , dest , spare , n - 1 ) ;
+        moveTower( source , spare , dest , 1 ) ;
+        moveTower( spare , source , dest , n - 1 ) ;
+    }
+        
+}
+
+int main()
+{
+    int h ;
+    cout<<"Enter height of tower\n" ;
+    cin>>h ;
+    if( h > 0 )
+    {
+        cout<<"Initial conditions\n";
+        cout<<A.get_name()<<"\n" ;
+        cout<<A.show_stack()<<"\n" ;
+        cout<<B.get_name()<<"\n" ;
+        cout<<B.show_stack()<<"\n" ;
+        cout<<C.get_name()<<"\n" ;
+        cout<<C.show_stack()<<"\n" ;                
+        stack A( h , "Source" ) , B( 0 , "Spare" ) , C( 0 , "Destination" ) ;
+        moveTower( A , B  , C , h ) ;
+    }    
+}
+    
