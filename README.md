@@ -1,1 +1,1 @@
-Solutuins of programming problems assigned in Data structures lab .  
+Solutions of programming problems assigned in Data structures lab .  
